@@ -30,38 +30,40 @@ $(document).ready(function(){
       $('#equation').text(equation.join(' '));
       
     } else if (Number(entry) || entry == "0" || entry == ".") {
-      //если набрана цифра
+      //если нажата цифра
       symbol += entry;
       $('#answer').text(symbol);
       $('#equation').text(equation.join(' '));
       
-    } else if (!Number(entry)) {
-      //когда арифметические знаки
-      if (symbol !== '') { 
-        equation.push(Number(symbol));
-      }
-      $('#answer').text(entry);
-      symbol = '';
-      equation.push(entry);
-      $('#equation').text(equation.join(' '));
-      console.log(equation);
-      
-      
-      if (entry == "=") {
-      //когда "="
-        for (var i = 1; i < equation.length-1; i++) {
-          if (equation[i] == "/") {
-            equation[i+1] = equation[i-1]/equation[i+1];
-          } else if (equation[i] == "*") {
-            equation[i+1] = equation[i-1]*equation[i+1];
-          } else if (equation[i] == "+") {
-            equation[i+1] = equation[i-1] + equation[i+1];
-          } else if (equation[i] == "-") {
-            equation[i+1] = equation[i-1] - equation[i+1];
-          }
+    } else if (entry == "=") {
+      //когда нажато "="
+      equation.push(Number(symbol));
+      for (var i = 1; i < equation.length-1; i++) {
+        if (equation[i] == "/") {
+          equation[i+1] = equation[i-1]/equation[i+1];
+        } else if (equation[i] == "*") {
+          equation[i+1] = equation[i-1]*equation[i+1];
+        } else if (equation[i] == "+") {
+          equation[i+1] = equation[i-1] + equation[i+1];
+        } else if (equation[i] == "-") {
+          equation[i+1] = equation[i-1] - equation[i+1];
         }
       }
-      $('#answer').text(equation[equation.length-2]);
+      $('#answer').text(equation[equation.length-1]);
+    } else {
+      //когда нажат арифметический знак
+      if (symbol) {
+        equation.push(Number(symbol));
       }
+      if (equation && typeof equation[equation.length-1] !== "number") {
+        equation.pop();
+      }
+      equation.push(entry);
+      symbol = "";
+      $('#answer').text(entry);
+      $('#equation').text(equation.join(' '));
+    }
+    console.log(equation);
+    console.log(symbol);
   })
 })
