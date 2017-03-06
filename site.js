@@ -35,6 +35,7 @@ $(document).ready(function(){
       //если нажата цифра
       for (var a = 1; a < equation.length; a++) {
         if (equation[a] == "=") {
+          symbol = '';
           equation = [];
           result = 0;
         }
