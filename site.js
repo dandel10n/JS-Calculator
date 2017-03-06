@@ -13,6 +13,7 @@
 $(document).ready(function(){
   var equation = [];
   var symbol = '';
+  var result;
   
   $('button').click(function() {
     var entry = $(this).attr("value");
@@ -22,6 +23,7 @@ $(document).ready(function(){
       $('#equation').text('0');
       equation = [];
       symbol = '';
+      result = 0;
       
     } else if (entry == "ce") {
       equation.pop();
@@ -31,25 +33,40 @@ $(document).ready(function(){
       
     } else if (Number(entry) || entry == "0" || entry == ".") {
       //если нажата цифра
+      for (var a = 1; a < equation.length; a++) {
+        if (equation[a] == "=") {
+          equation = [];
+          result = 0;
+        }
+      }
+      
       symbol += entry;
       $('#answer').text(symbol);
       $('#equation').text(equation.join(' '));
       
     } else if (entry == "=") {
       //когда нажато "="
-      equation.push(Number(symbol));
-      for (var i = 1; i < equation.length-1; i++) {
+      equation.push(Number(symbol), entry);
+      $('#equation').text(equation.join(' '));
+      result = equation[0];
+      
+      for (var i = 1; i < equation.length; i++) {
         if (equation[i] == "/") {
-          equation[i+1] = equation[i-1]/equation[i+1];
+          result /= equation[i+1];
         } else if (equation[i] == "*") {
-          equation[i+1] = equation[i-1]*equation[i+1];
+           result *= equation[i+1];
         } else if (equation[i] == "+") {
-          equation[i+1] = equation[i-1] + equation[i+1];
+          result += equation[i+1];
         } else if (equation[i] == "-") {
-          equation[i+1] = equation[i-1] - equation[i+1];
+          result -= equation[i+1];
         }
       }
-      $('#answer').text(equation[equation.length-1]);
+       
+      $('#answer').text(result);
+      equation.push(result);
+      $('#equation').text(equation.join(' '));
+      symbol = result;
+      
     } else {
       //когда нажат арифметический знак
       if (symbol) {
@@ -58,12 +75,17 @@ $(document).ready(function(){
       if (equation && typeof equation[equation.length-1] !== "number") {
         equation.pop();
       }
+      
+      for (var b = 1; b < equation.length; b++) {
+        if (equation[b] == "=") {
+          equation = [result]
+          result = 0;
+        }
+      }
       equation.push(entry);
       symbol = "";
       $('#answer').text(entry);
       $('#equation').text(equation.join(' '));
     }
-    console.log(equation);
-    console.log(symbol);
   })
 })
