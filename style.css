@@ -146,7 +146,7 @@ button {
   width: 50px;
 }
 
-#equalButton {
+.equalButton {
   position: relative;
   bottom: 25px;
   margin-top: -90px;

@@ -10,7 +10,7 @@
 <body>
 
     <div class="container">
-        <section class="mainBlock">
+        <section id="calculator" class="mainBlock">
 
             <h1 class="header">JS Calculator</h1>
             
@@ -20,8 +20,8 @@
             </div>
     
             <section id="buttons">
-                <button id="acButton" class="AC-CE-buttons" value="ac">AC</button>
-                <button id="ceButton" class="AC-CE-buttons" value="ce">CE</button>
+                <button class="AC-CE-buttons acButton" value="ac">AC</button>
+                <button class="AC-CE-buttons ceButton" value="ce">CE</button>
                 <button class="arithmeticSign" value="/">&divide;</button>
                 <button class="arithmeticSign" value="*">X</button>
                 
@@ -42,7 +42,7 @@
                 
                 <button id="zeroButton" class="numbers" value="0">0</button>
                 <button class="numbers" value=".">.</button>
-                <button id="equalButton" value="=">=</button>
+                <button class="equalButton" value="=">=</button>
             </section>
             
         </section>
@@ -53,6 +53,8 @@
     </div>
 
     <script src="jquery-3.1.1.min.js"></script>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="calculator.js"></script>
     <script src="site.js"></script>
 
 </body>

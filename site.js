@@ -15,7 +15,7 @@ $(document).ready(function(){
   var symbol = '';
   var result;
 
-  $('#acButton').click(function() {
+  $('#calculator .acButton').click(function() {
     $('#answer').text('0');
     $('#equation').text('0');
     equation = [];
@@ -23,14 +23,14 @@ $(document).ready(function(){
     result = 0;
   });
 
-  $("#ceButton").click(function() {
+  $("#calculator .ceButton").click(function() {
     equation.pop();
     symbol = '';
     $('#answer').text('0');
     $('#equation').text(equation.join(' '));
   });
 
-  $(".numbers").click(function() {
+  $("#calculator .numbers").click(function() {
     var entry = $(this).attr("value");
     //если нажата цифра
     for (var a = 1; a < equation.length; a++) {
@@ -46,7 +46,7 @@ $(document).ready(function(){
     $('#equation').text(equation.join(' '));
   });
 
-  $("#equalButton").click(function() {
+  $("#calculator .equalButton").click(function() {
     var entry = $(this).attr("value");
     //когда нажато "="
     equation.push(Number(symbol), entry);
@@ -71,7 +71,7 @@ $(document).ready(function(){
     symbol = result;
   });
 
-  $('.arithmeticSign').click(function() {
+  $('#calculator .arithmeticSign').click(function() {
     //когда нажат арифметический знак
     var entry = $(this).attr("value");
 
