@@ -11,86 +11,40 @@
 //6. При нажатии на "АС" удалять всё уравнение 
 
 $(document).ready(function(){
-  var equation = [];
-  var symbol = '';
-  var result;
+
+  var calculator = new Calculator();
 
   $('#calculator .acButton').click(function() {
+    calculator.cleanAll();
     $('#answer').text('0');
     $('#equation').text('0');
-    equation = [];
-    symbol = '';
-    result = 0;
   });
 
   $("#calculator .ceButton").click(function() {
-    equation.pop();
-    symbol = '';
+    calculator.deleteLastSign();
     $('#answer').text('0');
-    $('#equation').text(equation.join(' '));
+    $('#equation').text(calculator.equation.join(' '));
   });
 
   $("#calculator .numbers").click(function() {
     var entry = $(this).attr("value");
-    //если нажата цифра
-    for (var a = 1; a < equation.length; a++) {
-      if (equation[a] == "=") {
-        symbol = '';
-        equation = [];
-        result = 0;
-      }
-    }
 
-    symbol += entry;
-    $('#answer').text(symbol);
-    $('#equation').text(equation.join(' '));
+    calculator.numberInsered(entry);
+    $('#answer').text(calculator.symbol);
+    $('#equation').text(calculator.equation.join(' '));
   });
 
   $("#calculator .equalButton").click(function() {
-    var entry = $(this).attr("value");
-    //когда нажато "="
-    equation.push(Number(symbol), entry);
-    $('#equation').text(equation.join(' '));
-    result = equation[0];
-
-    for (var i = 1; i < equation.length; i++) {
-      if (equation[i] == "/") {
-        result /= equation[i+1];
-      } else if (equation[i] == "*") {
-         result *= equation[i+1];
-      } else if (equation[i] == "+") {
-        result += equation[i+1];
-      } else if (equation[i] == "-") {
-        result -= equation[i+1];
-      }
-    }
-
-    $('#answer').text(result);
-    equation.push(result);
-    $('#equation').text(equation.join(' '));
-    symbol = result;
+    calculator.calculationResult();
+    $('#answer').text(calculator.result);
+    $('#equation').text(calculator.equation.join(' '));
   });
 
   $('#calculator .arithmeticSign').click(function() {
-    //когда нажат арифметический знак
     var entry = $(this).attr("value");
 
-    if (symbol) {
-      equation.push(Number(symbol));
-    }
-    if (equation && typeof equation[equation.length-1] !== "number") {
-      equation.pop();
-    }
-
-    for (var b = 1; b < equation.length; b++) {
-      if (equation[b] == "=") {
-        equation = [result]
-        result = 0;
-      }
-    }
-    equation.push(entry);
-    symbol = "";
+    calculator.ariphmeticSignInsered(entry);
     $('#answer').text(entry);
-    $('#equation').text(equation.join(' '));
+    $('#equation').text(calculator.equation.join(' '));
   });
 })
