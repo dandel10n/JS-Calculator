@@ -23,21 +23,21 @@ $(document).ready(function(){
   $("#calculator .ceButton").click(function() {
     calculator.deleteLastSign();
     $('#answer').text('0');
-    $('#equation').text(calculator.equation.join(' '));
+    $('#equation').text(calculator.getEquation().join(' '));
   });
 
   $("#calculator .numbers").click(function() {
     var entry = $(this).attr("value");
 
     calculator.numberInsered(entry);
-    $('#answer').text(calculator.symbol);
-    $('#equation').text(calculator.equation.join(' '));
+    $('#answer').text(calculator.getSymbol());
+    $('#equation').text(calculator.getEquation().join(' '));
   });
 
   $("#calculator .equalButton").click(function() {
     calculator.calculationResult();
-    $('#answer').text(calculator.result);
-    $('#equation').text(calculator.equation.join(' '));
+    $('#answer').text(calculator.getResult());
+    $('#equation').text(calculator.getEquation().join(' '));
   });
 
   $('#calculator .arithmeticSign').click(function() {
@@ -45,6 +45,6 @@ $(document).ready(function(){
 
     calculator.ariphmeticSignInsered(entry);
     $('#answer').text(entry);
-    $('#equation').text(calculator.equation.join(' '));
+    $('#equation').text(calculator.getEquation().join(' '));
   });
 })

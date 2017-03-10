@@ -1,60 +1,71 @@
 function Calculator() {
 
-  this.equation = [];
-  this.symbol = " ";
-  this.result = 0;
-  var self = this;
+  var equation = [];
+  var symbol = " ";
+  var result = 0;
 
+  this.getEquation = function() {
+    return equation;
+  }
+  
+  this.getSymbol = function() {
+    return symbol;
+  }
+  
+  this.getResult = function() {
+    return result;
+  }
+  
   this.cleanAll = function() {
-    self.equation = [];
-    self.symbol = '';
-    self.result = 0;
+    equation = [];
+    symbol = '';
+    result = 0;
   }
 
   this.deleteLastSign = function() {
-    self.equation.pop();
-    self.symbol = '';
+    equation.pop();
+    symbol = '';
   }
 
   this.numberInsered = function(entry) {
-    if (self.equation[self.equation.length-1] == "=") {
-      self.symbol = '';
-      self.equation = [];
-      self.result = 0;
+    if (equation[equation.length-1] == "=") {
+      symbol = '';
+      equation = [];
+      result = 0;
     }
-    self.symbol += entry;
+    symbol += entry;
   }
 
   this.ariphmeticSignInsered = function(entry) {
-    if (self.symbol) {
-      self.equation.push(Number(self.symbol));
+    if (symbol) {
+      equation.push(Number(symbol));
     }
-    if (self.equation && typeof self.equation[self.equation.length-1] !== "number") {
-      self.equation.pop();
+    if (equation && typeof equation[equation.length-1] !== "number") {
+      equation.pop();
     }
-    if (self.equation[self.equation.length-3] == "=") {
-      self.equation = [self.result];
-      self.result = 0;
+    if (equation[equation.length-3] == "=") {
+      equation = [result];
+      result = 0;
     }
-    self.equation.push(entry);
-    self.symbol = "";
+    equation.push(entry);
+    symbol = "";
   }
 
   this.calculationResult = function() {
-    self.equation.push(Number(self.symbol), "=");
-    self.result = self.equation[0];
-    for (var i = 1; i < self.equation.length; i++) {
-      if (self.equation[i] == "/") {
-        self.result /= self.equation[i+1];
-      } else if (self.equation[i] == "*") {
-         self.result *= self.equation[i+1];
-      } else if (self.equation[i] == "+") {
-        self.result += self.equation[i+1];
-      } else if (self.equation[i] == "-") {
-        self.result -= self.equation[i+1];
+    equation.push(Number(symbol), "=");
+    result = equation[0];
+    for (var i = 1; i < equation.length; i++) {
+      if (equation[i] == "/") {
+        result /= equation[i+1];
+      } else if (equation[i] == "*") {
+         result *= equation[i+1];
+      } else if (equation[i] == "+") {
+        result += equation[i+1];
+      } else if (equation[i] == "-") {
+        result -= equation[i+1];
       }
     }
-    self.equation.push(self.result);
-    self.symbol = self.result;
+    equation.push(result);
+    symbol = result;
   }
 }
