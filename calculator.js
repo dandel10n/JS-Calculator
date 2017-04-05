@@ -7,15 +7,15 @@ function Calculator() {
   this.getEquation = function() {
     return equation;
   }
-  
+
   this.getSymbol = function() {
     return symbol;
   }
-  
+
   this.getResult = function() {
     return result;
   }
-  
+
   this.cleanAll = function() {
     equation = [];
     symbol = '';
@@ -28,7 +28,7 @@ function Calculator() {
   }
 
   this.numberInsered = function(entry) {
-    if (equation[equation.length-1] == "=") {
+    if (equation[equation.length-2] == "=") {
       symbol = '';
       equation = [];
       result = 0;

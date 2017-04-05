@@ -15,36 +15,89 @@ $(document).ready(function(){
   var calculator = new Calculator();
 
   $('#calculator .acButton').click(function() {
-    calculator.cleanAll();
-    $('#answer').text('0');
-    $('#equation').text('0');
+    pressedAC();
   });
 
   $("#calculator .ceButton").click(function() {
-    calculator.deleteLastSign();
-    $('#answer').text('0');
-    $('#equation').text(calculator.getEquation().join(' '));
+    pressedCE();
   });
 
   $("#calculator .numbers").click(function() {
     var entry = $(this).attr("value");
-
-    calculator.numberInsered(entry);
-    $('#answer').text(calculator.getSymbol());
-    $('#equation').text(calculator.getEquation().join(' '));
+    pressedNumber(entry);
   });
 
   $("#calculator .equalButton").click(function() {
-    calculator.calculationResult();
-    $('#answer').text(calculator.getResult());
-    $('#equation').text(calculator.getEquation().join(' '));
+    pressedEqualSign();
   });
 
   $('#calculator .arithmeticSign').click(function() {
     var entry = $(this).attr("value");
+    pressedArithmeticSign(entry);
+  });
+  
+  $(document).keypress(function(event) {
 
+    if (event.keyCode == 8) {
+      event.preventDefault();
+      pressedCE();
+    } else if (event.keyCode == 27) {
+      event.preventDefault();
+      pressedAC();
+    }
+
+    var entry = getChar(event);
+
+    if (entry === "+" || entry === "-" || entry === "/" || entry === "*") {
+      pressedArithmeticSign(entry);
+    } else if (entry === "=" || event.keyCode === 13) {
+      pressedEqualSign();
+    } else if (parseInt(entry) || event.charCode === 46) {
+      pressedNumber(entry);
+    }
+  })
+
+  function pressedCE() {
+    calculator.deleteLastSign();
+    $('#answer').text('0');
+    $('#equation').text(calculator.getEquation().join(' '));
+  }
+
+  function pressedAC() {
+    calculator.cleanAll();
+    $('#answer').text('0');
+    $('#equation').text('0');
+  }
+
+  function pressedArithmeticSign(entry) {
     calculator.ariphmeticSignInsered(entry);
     $('#answer').text(entry);
     $('#equation').text(calculator.getEquation().join(' '));
-  });
+  }
+
+  function pressedEqualSign() {
+    calculator.calculationResult();
+    $('#answer').text(calculator.getResult());
+    $('#equation').text(calculator.getEquation().join(' '));
+  }
+
+  function pressedNumber(entry) {
+    calculator.numberInsered(entry);
+    $('#answer').text(calculator.getSymbol());
+    $('#equation').text(calculator.getEquation().join(' '));
+  }
 })
+
+function getChar(event) {
+  if (event.which == null) { // IE
+    if (event.keyCode < 32) return null; // спец. символ
+    return String.fromCharCode(event.keyCode)
+  }
+
+  if (event.which != 0 && event.charCode != 0) { // все кроме IE
+    if (event.which < 32) return null; // спец. символ
+    return String.fromCharCode(event.which); // остальные
+  }
+
+  return null; // спец. символ
+}
